@@ -1,0 +1,25 @@
+Name,col.undertaken,Dob,Stream,Grade, ,city
+
+student = LOAD 'studentus.txt'
+   USING PigStorage(',')
+   as ( Name:chararray, col:chararray, Dob:chararray, Stream:chararray, Grade:float, state:chararray, city:chararray );
+   
+   
+1. Find the number of students who scored less than 5(50%).
+grunt>less = FILTER student BY Grade < 5;
+grunt> dump less
+2. List the name of students who are from Alaska.
+
+grunt> alaska = FILTER student BY state == 'alaska'
+grunt> dump alaska
+3. How many government collages are there in Alabama?
+
+grunt> alabama = FILTER student BY ((col == 'goverenment') AND (state == 'alabama' ));
+grunt> alabama_cnt = GROUP alabama ALL;
+grunt> alabama_count = FOREACH alabama_cnt GENERATE COUNT(alabama.col);
+grunt> dump alabama_count;
+
+4. List the name of students who are from Oregon and persuing BE.
+
+ grunt> oregon_BE = FILTER student BY ((state == 'oregon') AND (Stream == 'BE' )); 
+ grunt> dump oregon_BE ;
